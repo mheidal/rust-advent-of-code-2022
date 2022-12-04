@@ -9,12 +9,6 @@ enum Shape {
     Scissors,
 }
 
-enum GameEnd {
-    Win,
-    Draw,
-    Loss,
-}
-
 fn parse_letter(letter: &str) -> Shape {
     match letter {
         "A" => Rock,
@@ -51,34 +45,28 @@ fn letters_to_shape_and_condition(them_letter: &str, you_letter: &str) -> (Shape
 }
 
 fn get_score_from_match(them: Shape, you: Shape) -> i32 {
-    let game_end: GameEnd;
     match them {
         Rock => {
             match you {
-                Rock => game_end = Draw,
-                Paper => game_end = Win,
-                Scissors => game_end = Loss,
+                Rock => 3,
+                Paper => 6,
+                Scissors => 0,
             }
         },
         Paper => {
             match you {
-                Rock => game_end = Loss,
-                Paper => game_end = Draw,
-                Scissors => game_end = Win,
+                Rock => 0,
+                Paper => 3,
+                Scissors => 6,
             }
         },
         Scissors => {
             match you {
-                Rock => game_end = Win,
-                Paper => game_end = Loss,
-                Scissors => game_end = Draw,
+                Rock => 6,
+                Paper => 0,
+                Scissors => 3,
             }
         },
-    }
-    match game_end {
-        Win => 6,
-        Draw => 3,
-        Loss => 0,
     }
 }
 
