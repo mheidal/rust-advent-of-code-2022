@@ -26,7 +26,6 @@ fn part_1() {
         let trimmed_line = line.trim();
         let line_len = trimmed_line.len();
         let first_compartment = &trimmed_line[..line_len/2];
-        // println!("First compartment contains {}", first_compartment);
         let second_compartment = &trimmed_line[line_len/2..];
         for item in get_unique_chars_in_str(first_compartment) {
             if second_compartment.contains(item) {
