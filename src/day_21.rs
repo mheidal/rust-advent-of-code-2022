@@ -1,5 +1,3 @@
-
-            
 use crate::read_input;
 
 fn part_1() {

@@ -56,5 +56,4 @@ fn main() {
     } else {
         day_03::solve();
     }
-
 }
