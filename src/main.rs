@@ -26,7 +26,7 @@ mod day_24;
 mod day_25;
 
 fn main() {
-    let should_run_all = true;
+    let should_run_all = false;
     if should_run_all {
         day_01::solve();
         day_02::solve();
