@@ -1,4 +1,3 @@
-use crate::day_02::GameEnd::{Draw, Loss, Win};
 use crate::day_02::Shape::{Paper, Rock, Scissors};
 use crate::read_input;
 
