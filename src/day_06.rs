@@ -5,7 +5,7 @@ use crate::read_input;
 fn find_index_of_unique_character_set(threshold: usize) -> usize {
     let input = read_input::read("inputs/06.txt");
     for i in threshold..input.len() {
-        if HashSet::<char>::from_iter(input[i-&threshold..i].chars()).len() < threshold {
+        if HashSet::<char>::from_iter(input[i-&threshold..i].chars()).len() == threshold {
             return i
         }
     }
