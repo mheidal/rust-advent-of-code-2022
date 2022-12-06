@@ -18,13 +18,6 @@ fn one_at_a_time(stacks: &mut [Vec<char>; 9], move_: Move) {
 }
 
 fn all_at_once(stacks: &mut [Vec<char>; 9], move_: Move) {
-    println!(
-        "Moving {} from {} (l: {}) to {} (l: {})", move_.count.to_string(),
-        move_.origin.to_string(),
-        stacks[move_.origin].len().to_string(),
-        move_.destination.to_string(),
-        stacks[move_.destination].len().to_string()
-    );
     let tail = stacks[move_.origin]
         .split_off(stacks[move_.origin].len() - move_.count);
     stacks[move_.destination]
