@@ -1,5 +1,3 @@
-extern crate core;
-
 mod read_input;
 mod day_01;
 mod day_02;
@@ -56,6 +54,6 @@ fn main() {
         day_24::solve();
         day_25::solve();
     } else {
-        day_09::solve();
+        day_10::solve();
     }
 }
