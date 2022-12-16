@@ -17,12 +17,6 @@ impl Point {
     }
 }
 
-impl Debug for Point {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "({},{})", self.x, self.y)
-    }
-}
-
 #[derive(Clone, Copy)]
 struct Range {
     start: i64,
@@ -42,18 +36,6 @@ impl Range {
     }
 }
 
-impl fmt::Display for Range {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "[{},{}]", self.start, self.end)
-    }
-}
-
-impl fmt::Debug for Range {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "[{},{}]", self.start, self.end)
-    }
-}
-
 #[derive(Clone, Eq, Hash, PartialEq)]
 struct Line {
     m: i64,
@@ -63,12 +45,6 @@ struct Line {
 impl Line {
     fn new(m: i64, b: i64) -> Line {
         Line {m, b}
-    }
-}
-
-impl fmt::Debug for Line {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "y={}x+{}", self.m, self.b)
     }
 }
 
@@ -83,7 +59,6 @@ fn ranges_overlap(a: Range, b: Range) -> bool {
 fn resolve_range_overlaps(mut ranges: Vec<Range>) -> Vec<Range> {
     let mut new_ranges: Vec<Range> = vec![];
     ranges.sort_by(|a, b|a.start.cmp(&b.start));
-    // println!("Unresolved ranges: {:?}", ranges);
     let mut ranges_iter = ranges.iter();
     let mut cur: Range = *ranges_iter.next().unwrap();
     let mut has_next = true;
@@ -106,7 +81,6 @@ fn resolve_range_overlaps(mut ranges: Vec<Range>) -> Vec<Range> {
             None => has_next = false,
         }
     }
-    // println!("Resolved ranges: {:?}", new_ranges);
     new_ranges
 }
 
@@ -170,39 +144,7 @@ fn part_1() {
     println!("Part 1: {}", count);
 }
 
-fn part_2_brute_force() {
-    let scanner_beacons = get_scanner_beacons();
-    let mut target_beacon: Option<Point> = None;
-    for target_row in 0..=4_000_000 {
-        if target_row % 10_000 == 0 {
-            println!("{}", target_row);
-        }
-        match target_beacon {
-            Some(_) => break,
-            None => (),
-        };
-        let ranges = get_ranges(target_row);
-        for i in 0..ranges.len() - 1 {
-            if ranges.get(i+1).unwrap().start - ranges.get(i).unwrap().end == 2 {
-                let point_between = Point {x: ranges.get(i).unwrap().end + 1, y: target_row};
-                let mut within_any = false;
-                for (scanner, beacon) in &scanner_beacons {
-                    if manhattan(scanner, beacon) >= manhattan(scanner, &point_between) {
-                        within_any = true;
-                    }
-                }
-                if !within_any {
-                    target_beacon = Some(point_between);
-                }
-            }
-        }
-    }
-    let target_beacon = target_beacon.unwrap();
-    let target_frequency = target_beacon.x * 4_000_000 + target_beacon.y;
-    println!("Part 2: {}", target_frequency);
-}
-
-fn part_2_elegant() {
+fn part_2() {
     let mut lines: HashSet<Line> = HashSet::new();
     for (scanner, beacon) in get_scanner_beacons() {
         let dist = manhattan(&scanner, &beacon);
@@ -215,6 +157,8 @@ fn part_2_elegant() {
         for (i, point_1) in points[..].iter().enumerate() {
             for point_2 in points[i+1..].iter() {
                 if point_1.x != point_2.x && point_1.y != point_2.y {
+                    // this doesn't feel like it should work! It does, but there's probably some
+                    // problematic truncation here! fix me!
                     let m = (point_2.y - point_1.y) / (point_2.x - point_1.x);
                     let b = point_1.y - (m * point_1.x);
                     lines.insert(Line::new(m, b));
@@ -247,7 +191,6 @@ fn part_2_elegant() {
 pub fn solve() {
     println!("Day 15");
     part_1();
-    // part_2_brute_force();
-    part_2_elegant();
+    part_2();
     println!();
 }
