@@ -54,6 +54,6 @@ fn main() {
         day_24::solve();
         day_25::solve();
     } else {
-        day_15::solve();
+        day_13::solve();
     }
 }

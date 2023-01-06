@@ -1,6 +1,5 @@
 use std::collections::HashSet;
-use std::{cmp, fmt};
-use std::fmt::{Debug, Formatter};
+use std::cmp;
 use itertools::Itertools;
 use regex::Regex;
 use crate::read_input;
